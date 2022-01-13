@@ -1,7 +1,16 @@
 import './App.css'
+import { Fragment } from 'react'
+import { Layout } from 'components'
+import { Router } from 'router'
 
 function App() {
-  return <div className="App">Testing from app!</div>
+  return (
+    <Fragment>
+      <Layout>
+        <Router />
+      </Layout>
+    </Fragment>
+  )
 }
 
 export default App
