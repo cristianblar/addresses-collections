@@ -1,10 +1,9 @@
 type Address = {
-  streetNumber: number
+  streetNumber: number | string
   streetName: string
   city: string
   province: string
-  code: number
-  label?: string
+  code: string
 }
 
 export default Address
