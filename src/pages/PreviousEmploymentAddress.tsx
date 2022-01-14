@@ -81,8 +81,7 @@ export default function PreviousEmploymentAddress(): JSX.Element {
                     onChange={(e) =>
                       setEmployment((currentEmployment) => ({
                         ...currentEmployment,
-                        employmentType: e.target
-                          .name as typeof employmentTypes[number]
+                        employmentType: e.target.name
                       }))
                     }
                   >

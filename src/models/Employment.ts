@@ -1,8 +1,6 @@
-import { employmentTypes } from 'constant'
-
 type Employment = {
   employed: boolean
-  employmentType: typeof employmentTypes[number]
+  employmentType: string
 }
 
 export default Employment
