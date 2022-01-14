@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom'
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
+import { Box, Button, Typography } from '@mui/material'
 import FeedIcon from '@mui/icons-material/Feed'
-import Typography from '@mui/material/Typography'
 
 export default function MainButton(): JSX.Element {
   return (
