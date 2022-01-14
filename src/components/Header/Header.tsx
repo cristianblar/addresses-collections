@@ -17,7 +17,7 @@ export default function Header() {
           />
         </Link>
       </div>
-      <Typography ml={2} variant="h1" color={colors.red}>
+      <Typography ml={2} variant="h1" color={colors.orange}>
         Canadian Bank
       </Typography>
     </Box>
