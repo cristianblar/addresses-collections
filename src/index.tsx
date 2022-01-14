@@ -1,18 +1,35 @@
 import './index.css'
 import { BrowserRouter as MainRouter } from 'react-router-dom'
+import { colors } from 'constant'
 import { Provider } from 'react-redux'
 import { store } from './app/store'
+import { StrictMode } from 'react'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
 import App from './App'
-import React from 'react'
 import ReactDOM from 'react-dom'
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: colors.red,
+      light: colors.light
+    },
+    secondary: {
+      main: colors.orange,
+      dark: colors.darkOrange
+    }
+  }
+})
+
 ReactDOM.render(
-  <React.StrictMode>
+  <StrictMode>
     <Provider store={store}>
-      <MainRouter>
-        <App />
-      </MainRouter>
+      <ThemeProvider theme={theme}>
+        <MainRouter>
+          <App />
+        </MainRouter>
+      </ThemeProvider>
     </Provider>
-  </React.StrictMode>,
+  </StrictMode>,
   document.getElementById('root')
 )
