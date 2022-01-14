@@ -1,5 +1,5 @@
 import { Fragment, ReactNode, Suspense } from 'react'
-import { Loading } from '.'
+import { Header, Loading } from '.'
 
 interface Props {
   children: ReactNode
@@ -8,8 +8,8 @@ interface Props {
 export default function Layout({ children }: Props): JSX.Element {
   return (
     <Fragment>
+      <Header />
       <Suspense fallback={<Loading />}>
-        <header>HEADER!</header>
         <main>{children}</main>
       </Suspense>
     </Fragment>
