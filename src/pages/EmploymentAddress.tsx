@@ -41,7 +41,9 @@ export default function EmploymentAddress(): JSX.Element {
     const cleanedValues = Object.entries(values).reduce(
       (cleanedObject, tuple) => {
         if (typeof tuple[1] === 'string') {
-          cleanedObject[tuple[0]] = tuple[1].trim().toUpperCase()
+          if (tuple[0] === 'code')
+            cleanedObject[tuple[0]] = tuple[1].replaceAll(' ', '').toUpperCase()
+          else cleanedObject[tuple[0]] = tuple[1].trim().toUpperCase()
         } else {
           cleanedObject[tuple[0]] = tuple[1]
         }
