@@ -85,8 +85,7 @@ export default function Form({
                 value={formik.values.streetNumber}
                 onChange={formik.handleChange}
                 error={
-                  formik.touched.streetNumber &&
-                  Boolean(formik.errors.streetNumber)
+                  formik.touched.streetNumber && !!formik.errors.streetNumber
                 }
                 helperText={
                   formik.touched.streetNumber && formik.errors.streetNumber
@@ -101,9 +100,7 @@ export default function Form({
                 label="Street name"
                 value={formik.values.streetName}
                 onChange={formik.handleChange}
-                error={
-                  formik.touched.streetName && Boolean(formik.errors.streetName)
-                }
+                error={formik.touched.streetName && !!formik.errors.streetName}
                 helperText={
                   formik.touched.streetName && formik.errors.streetName
                 }
@@ -117,7 +114,7 @@ export default function Form({
                 label="City"
                 value={formik.values.city}
                 onChange={formik.handleChange}
-                error={formik.touched.city && Boolean(formik.errors.city)}
+                error={formik.touched.city && !!formik.errors.city}
                 helperText={formik.touched.city && formik.errors.city}
               />
             </Grid>
@@ -131,9 +128,7 @@ export default function Form({
                   value={formik.values.province}
                   label="Province"
                   onChange={formik.handleChange}
-                  error={
-                    formik.touched.province && Boolean(formik.errors.province)
-                  }
+                  error={formik.touched.province && !!formik.errors.province}
                 >
                   {provinces.map((province, idx) => (
                     <MenuItem key={`${idx}-${province}`} value={province}>
@@ -151,7 +146,7 @@ export default function Form({
                 label="Postal code"
                 value={formik.values.code}
                 onChange={formik.handleChange}
-                error={formik.touched.code && Boolean(formik.errors.code)}
+                error={formik.touched.code && !!formik.errors.code}
                 helperText={formik.touched.code && formik.errors.code}
               />
             </Grid>
