@@ -1,19 +1,31 @@
-import { Link } from 'react-router-dom'
 import { Box, Button, Typography } from '@mui/material'
-import FeedIcon from '@mui/icons-material/Feed'
+import { Link, To } from 'react-router-dom'
 
-export default function MainButton(): JSX.Element {
+interface MainButtonProps {
+  text: string
+  toUrl: To
+  icon: JSX.Element
+  handleClick?: () => void
+}
+
+export default function MainButton({
+  text,
+  toUrl,
+  icon,
+  handleClick
+}: MainButtonProps): JSX.Element {
   return (
     <Box textAlign="center">
       <Button
         component={Link}
-        to="/residential-address"
-        endIcon={<FeedIcon />}
+        to={toUrl}
+        endIcon={icon}
         variant="outlined"
         size="large"
         color="primary"
+        onClick={handleClick ?? undefined}
       >
-        <Typography variant="h5">Enter information</Typography>
+        <Typography variant="h5">{text}</Typography>
       </Button>
     </Box>
   )
