@@ -67,7 +67,10 @@ export const addressesSlice = createSlice({
       state.previousEmploymentData = action.payload
     },
     cleanState: (state) => {
-      state = initialState
+      state.residentialAddress = initialState.residentialAddress
+      state.propertyAddress = initialState.propertyAddress
+      state.employmentData = initialState.employmentData
+      state.previousEmploymentData = initialState.previousEmploymentData
     }
   }
 })
