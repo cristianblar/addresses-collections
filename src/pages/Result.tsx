@@ -122,10 +122,7 @@ export default function Result(): JSX.Element {
           icon={<ReplayIcon />}
           text="Start over"
           toUrl="/"
-          handleClick={() => {
-            console.log('in!')
-            dispatch(cleanState())
-          }}
+          handleClick={() => dispatch(cleanState())}
         />
       </Box>
     </Box>
