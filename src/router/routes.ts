@@ -16,18 +16,22 @@ export const routes: Route[] = [
   },
   {
     Component: PropertyAddress,
-    path: 'property-address'
+    path: 'property-address',
+    require: 'residentialAddress'
   },
   {
     Component: EmploymentAddress,
-    path: 'employment-address'
+    path: 'employment-address',
+    require: 'propertyAddress'
   },
   {
     Component: PreviousEmploymentAddress,
-    path: 'previous-employment-address'
+    path: 'previous-employment-address',
+    require: 'employmentData'
   },
   {
     Component: Result,
-    path: 'data-sent'
+    path: 'data-sent',
+    require: 'employmentData'
   }
 ]
