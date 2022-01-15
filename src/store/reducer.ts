@@ -65,6 +65,9 @@ export const addressesSlice = createSlice({
       action: PayloadAction<Address & Employment>
     ) => {
       state.previousEmploymentData = action.payload
+    },
+    cleanState: (state) => {
+      state = initialState
     }
   }
 })
@@ -73,7 +76,8 @@ export const {
   submitEmploymentData,
   submitPreviousEmploymentData,
   submitPropertyAddress,
-  submitResidentialAddress
+  submitResidentialAddress,
+  cleanState
 } = addressesSlice.actions
 
 export const selectResidentialAddress = (state: RootState) =>
