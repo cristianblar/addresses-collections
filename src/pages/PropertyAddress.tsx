@@ -2,15 +2,34 @@ import { Address } from 'models'
 import { Box, Paper, Typography } from '@mui/material'
 import { colors } from 'constant'
 import { Form } from 'components'
+import {
+  useAppSelector,
+  useAppDispatch,
+  selectPropertyAddress,
+  submitPropertyAddress
+} from 'store'
 import { useNavigate } from 'react-router-dom'
 
 export default function PropertyAddress(): JSX.Element {
   const navigate = useNavigate()
+  const address = useAppSelector(selectPropertyAddress)
+  const dispatch = useAppDispatch()
 
   const handleBack = () => navigate('/residential-address')
 
   const handleSubmit = (values: Address) => {
-    console.log(values)
+    const cleanedValues = Object.entries(values).reduce(
+      (cleanedObject, tuple) => {
+        if (typeof tuple[1] === 'string') {
+          cleanedObject[tuple[0]] = tuple[1].trim().toUpperCase()
+        } else {
+          cleanedObject[tuple[0]] = tuple[1]
+        }
+        return cleanedObject
+      },
+      {} as Record<PropertyKey, unknown>
+    )
+    dispatch(submitPropertyAddress(cleanedValues as Address))
     navigate('/employment-address')
   }
 
@@ -25,6 +44,7 @@ export default function PropertyAddress(): JSX.Element {
           </Box>
           <Form
             origin="property-address"
+            currentAddress={address}
             handleSubmit={handleSubmit}
             handleBack={handleBack}
           />

@@ -14,21 +14,47 @@ import {
 } from '@mui/material'
 import { colors, employmentTypes } from 'constant'
 import { Form } from 'components'
+import {
+  useAppSelector,
+  useAppDispatch,
+  selectEmploymentAddress,
+  selectEmploymentData,
+  submitEmploymentData
+} from 'store'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
 export default function EmploymentAddress(): JSX.Element {
   const navigate = useNavigate()
+  const address = useAppSelector(selectEmploymentAddress)
+  const { employed, employmentType } = useAppSelector(selectEmploymentData)
+  const dispatch = useAppDispatch()
 
   const [employment, setEmployment] = useState<Employment>({
-    employed: false,
-    employmentType: 'Employed'
+    employed,
+    employmentType
   })
 
   const handleBack = () => navigate('/property-address')
 
   const handleSubmit = (values: Address) => {
-    console.log(values)
+    const cleanedValues = Object.entries(values).reduce(
+      (cleanedObject, tuple) => {
+        if (typeof tuple[1] === 'string') {
+          cleanedObject[tuple[0]] = tuple[1].trim().toUpperCase()
+        } else {
+          cleanedObject[tuple[0]] = tuple[1]
+        }
+        return cleanedObject
+      },
+      {} as Record<PropertyKey, unknown>
+    )
+    dispatch(
+      submitEmploymentData({
+        ...(cleanedValues as Address),
+        ...employment
+      })
+    )
     navigate('/previous-employment-address')
   }
 
@@ -80,7 +106,7 @@ export default function EmploymentAddress(): JSX.Element {
                   onChange={(e) =>
                     setEmployment((currentEmployment) => ({
                       ...currentEmployment,
-                      employmentType: e.target.name
+                      employmentType: e.target.value
                     }))
                   }
                 >
@@ -95,6 +121,7 @@ export default function EmploymentAddress(): JSX.Element {
           </Grid>
           <Form
             origin="employment-address"
+            currentAddress={address}
             employed={employment.employed}
             handleSubmit={handleSubmit}
             handleBack={handleBack}
