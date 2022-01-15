@@ -6,7 +6,8 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField
+  TextField,
+  Typography
 } from '@mui/material'
 import { Fragment } from 'react'
 import { provinces } from 'constant'
@@ -16,17 +17,31 @@ import { useFormik } from 'formik'
 const validationSchema: SchemaOf<Address> = yupObject({
   streetNumber: number().required('Street number is required'),
   streetName: yupString()
+    .trim()
     .min(2, 'Street name is not valid')
     .required('Street name is required'),
-  city: yupString().min(2, 'City is not valid').required('City is required'),
-  province: yupString().required('Province is required'),
+  city: yupString()
+    .trim()
+    .min(2, 'City is not valid')
+    .required('City is required'),
+  province: yupString().trim().required('Province is required'),
   code: yupString()
+    .trim()
     .matches(/^[A-Za-z0-9]{3}\s?[A-Za-z0-9]{3}$/m, 'Invalid postal code')
     .required('Postal code is required')
 })
 
+const optionalValidationSchema: SchemaOf<Partial<Address>> = yupObject({
+  streetNumber: yupString(),
+  streetName: yupString(),
+  city: yupString(),
+  province: yupString(),
+  code: yupString()
+})
+
 interface FormProps {
   origin: string
+  currentAddress: Address
   employed?: boolean
   handleSubmit: (values: Address) => void
   handleBack: () => void
@@ -34,19 +49,24 @@ interface FormProps {
 
 export default function Form({
   origin,
+  currentAddress,
   employed,
   handleSubmit,
   handleBack
 }: FormProps): JSX.Element {
+  const { city, code, province, streetName, streetNumber } = currentAddress
   const formik = useFormik({
     initialValues: {
-      streetNumber: '',
-      streetName: '',
-      city: '',
-      province: '',
-      code: ''
+      streetNumber,
+      streetName,
+      city,
+      province,
+      code
     },
-    validationSchema: validationSchema,
+    validationSchema:
+      origin === 'previous-employment-address' && !employed
+        ? optionalValidationSchema
+        : validationSchema,
     onSubmit: handleSubmit
   })
 
@@ -136,6 +156,20 @@ export default function Form({
               />
             </Grid>
           </Fragment>
+        )}
+        {origin === 'property-address' && formik.values.province === 'Quebec' && (
+          <Grid item xs={12}>
+            <Typography variant="caption" color="red">
+              Quebec is not allowed for Property address
+            </Typography>
+          </Grid>
+        )}
+        {origin === 'employment-address' && !employed && (
+          <Grid item xs={12}>
+            <Typography variant="caption" color="red">
+              Only employed customers must enter their information
+            </Typography>
+          </Grid>
         )}
         <Grid item xs={6}>
           <Button
